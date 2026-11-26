@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ทะเบียนหนังสือราชการ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f5f8;--sf:#fff;--ink:#1b2333;--mut:#586377;--ln:#d8dee8;--ac:#1f3a5f;--acf:#fff;--sel:#e4ebf6;--wb:#fdecc8;--wf:#7a4a06;--db:#d9f0e1;--df:#1b5e36;--er:#b42318;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e131b;--sf:#161d28;--ink:#e6eaf1;--mut:#9aa5b8;--ln:#2a3342;--ac:#8fb4ee;--acf:#0e131b;--sel:#1f2a3d;--wb:#4a3510;--wf:#f7d58b;--db:#173b27;--df:#9be0b5;--er:#ff8a80;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0e131b;--sf:#161d28;--ink:#e6eaf1;--mut:#9aa5b8;--ln:#2a3342;--ac:#8fb4ee;--acf:#0e131b;--sel:#1f2a3d;--wb:#4a3510;--wf:#f7d58b;--db:#173b27;--df:#9be0b5;--er:#ff8a80;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Sarabun,"Noto Sans Thai",Tahoma,sans-serif}
+.top{display:flex;gap:12px;align-items:center;flex-wrap:wrap;max-width:1180px;margin:0 auto;padding:18px 20px}
+h1{font-size:1.4rem;margin:0;flex:1 1 auto}
+.m{color:var(--mut);font-size:.875rem}
+.layout{display:grid;grid-template-columns:210px 1fr;gap:20px;max-width:1180px;margin:0 auto;padding:0 20px 28px}
+button,input,select,textarea{font:inherit;color:inherit}
+.btn{background:var(--ac);color:var(--acf);border:0;border-radius:6px;padding:8px 16px;font-weight:700;cursor:pointer}
+.btn.g{background:transparent;color:var(--ink);border:1px solid var(--ln);font-weight:500}
+.btn:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.fy{display:flex;flex-direction:column;gap:2px}
+.fy button{display:flex;justify-content:space-between;gap:8px;text-align:left;background:none;border:0;border-left:4px solid transparent;border-radius:0 6px 6px 0;padding:8px 12px;cursor:pointer}
+.fy button.on{background:var(--sel);border-left-color:var(--ac);font-weight:700}
+.fy small{color:var(--mut)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.bar input,.bar select,dialog input,dialog select,dialog textarea{background:var(--sf);border:1px solid var(--ln);border-radius:6px;padding:8px 10px;width:100%}
+.bar input{flex:1 1 260px;width:auto}
+.bar select{width:auto}
+.box{background:var(--sf);border:1px solid var(--ln);border-radius:8px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:720px}
+th{text-align:left;font-weight:700;font-size:.875rem;color:var(--mut);padding:10px 14px;border-bottom:1px solid var(--ln)}
+td{padding:12px 14px;border-bottom:1px solid var(--ln);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.bd{border:0;border-radius:99px;padding:3px 12px;font-size:.875rem;cursor:pointer;white-space:nowrap}
+.bd.wk{background:var(--wb);color:var(--wf)}
+.bd.dn{background:var(--db);color:var(--df)}
+.ac{white-space:nowrap}
+.ac a,.lk{color:var(--ac);background:none;border:0;cursor:pointer;padding:0 8px 0 0;text-decoration:underline}
+.empty{padding:36px 16px;text-align:center;color:var(--mut)}
+#msg{color:var(--er);padding:0 20px;max-width:1180px;margin:0 auto 8px}
+dialog{border:1px solid var(--ln);border-radius:10px;background:var(--sf);color:var(--ink);padding:0;width:min(580px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+form{padding:20px}
+form h2{margin:0 0 12px;font-size:1.2rem}
+fieldset{border:0;padding:0;margin:0 0 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+legend{font-weight:700;padding:0;margin-bottom:8px}
+label{display:block;font-size:.9rem}
+label input,label select,label textarea{margin-top:4px;font-size:1rem}
+.full{grid-column:1/-1}
+.rq{color:var(--er)}
+.foot{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.foot .sp{flex:1}
+.dng{color:var(--er);border-color:var(--er)}
+#err{color:var(--er);margin:0 0 10px;min-height:1.2em}
+@media(max-width:760px){
+.layout{grid-template-columns:1fr}
+.fy{flex-direction:row;overflow-x:auto}
+.fy button{border-left:0;border-bottom:3px solid transparent;border-radius:0;white-space:nowrap}
+.fy button.on{border-bottom-color:var(--ac)}
+table{min-width:0}thead{display:none}
+tr{display:block;padding:10px 0;border-bottom:1px solid var(--ln)}
+td{display:block;border:0;padding:2px 14px}
+fieldset{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>ทะเบียนหนังสือราชการ</h1>
+  <button class="btn" id="add" disabled>เพิ่มเอกสาร</button>
+</div>
+<div id="msg" role="alert"></div>
+<div class="layout">
+  <nav class="fy" id="fy" aria-label="ปีงบประมาณ"></nav>
+  <main>
+    <div class="bar">
+      <input type="search" id="q" placeholder="ค้นหาจากเลขที่หนังสือ เรื่อง หรือหน่วยงาน" aria-label="ค้นหาเอกสาร">
+      <select id="st" aria-label="สถานะ">
+        <option value="all">ทุกสถานะ</option>
+        <option value="wip">อยู่ระหว่างดำเนินการ</option>
+        <option value="filed">เก็บเข้าแฟ้ม</option>
+      </select>
+    </div>
+    <div class="m" id="cnt" style="margin-bottom:8px"></div>
+    <div class="box">
+      <table>
+        <thead><tr><th>เลขที่หนังสือ</th><th>เรื่อง / หน่วยงาน</th><th>การรับ</th><th>สถานะ</th><th></th></tr></thead>
+        <tbody id="rows"><tr><td colspan="5" class="empty">กำลังโหลด…</td></tr></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<dialog id="dlg">
+  <form id="f" autocomplete="off">
+    <h2 id="ttl">เพิ่มเอกสาร</h2>
+    <fieldset>
+      <legend>ข้อมูลหนังสือ</legend>
+      <label>เลขที่หนังสือ <span class="rq">*</span><input name="docNo" required></label>
+      <label>ลงวันที่ <span class="rq">*</span><input type="date" name="docDate" required></label>
+      <label class="full">หน่วยงาน <span class="rq">*</span><input name="agency" required></label>
+      <label class="full">เรื่อง <span class="rq">*</span><textarea name="subject" rows="2" required></textarea></label>
+      <label class="full">สถานะ
+        <select name="status"><option value="wip">อยู่ระหว่างดำเนินการ</option><option value="filed">เก็บเข้าแฟ้ม</option></select>
+      </label>
+    </fieldset>
+    <fieldset>
+      <legend>การรับหนังสือ (ไม่บังคับ)</legend>
+      <label>เลขรับ<input name="recvNo"></label>
+      <label>วันที่รับ<input type="date" name="recvDate"></label>
+    </fieldset>
+    <fieldset>
+      <legend>ไฟล์เอกสาร</legend>
+      <label class="full"><span id="fl">เลือกไฟล์ PDF</span><input type="file" name="file" accept="application/pdf,.pdf"></label>
+    </fieldset>
+    <div class="m" id="fyh" style="margin-bottom:10px"></div>
+    <p id="err" role="alert"></p>
+    <div class="foot">
+      <button type="button" class="btn g dng" id="del" hidden>ลบเอกสาร</button>
+      <span class="sp"></span>
+      <button type="button" class="btn g" id="cx">ยกเลิก</button>
+      <button type="submit" class="btn" id="sv">บันทึก</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+// นำ URL ที่ได้จาก Deploy Google Apps Script Web App มาใส่ตรงนี้
+const API_URL = 'https://script.google.com/macros/s/AKfycbxG6cDlVi9v57mE4FkjNpbxHCOd5L4ZqOIZAYepZjOjH7xKTJPPRuqNWGfYTj5zt6WY/exec';
+
+const $=s=>document.querySelector(s);
+const LBL={wip:'อยู่ระหว่างดำเนินการ',filed:'เก็บเข้าแฟ้ม'};
+const MON=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s??'').toLowerCase().replace(/\s+/g,'');
+const okUrl=u=>typeof u==='string'&&u.startsWith('https://');
+function fyOf(d){const [y,m]=d.split('-').map(Number);return (m>=10?y+1:y)+543}
+function fmt(d){if(!d)return '-';const [y,m,x]=d.split('-').map(Number);return x+' '+MON[m-1]+' '+(y+543)}
+function nowFy(){const n=new Date();return (n.getMonth()>=9?n.getFullYear()+1:n.getFullYear())+543}
+const toB64=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(',')[1]);r.onerror=()=>no(new Error('อ่านไฟล์ไม่ได้'));r.readAsDataURL(f)});
+
+let docs=[],fy='all',editing=null,armed=false;
+
+async function apiPost(payload){
+  if(!API_URL||API_URL.startsWith('REPLACE_'))throw new Error('ยังไม่ได้ตั้งค่า API_URL ของ Google Apps Script');
+  const res=await fetch(API_URL,{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify(payload)
+  });
+  const json=await res.json();
+  if(!json.ok)throw new Error(json.error||'ดำเนินการไม่สำเร็จ');
+  return json.docs||[];
+}
+
+async function refreshDocs(){
+  if(!API_URL||API_URL.startsWith('REPLACE_')){
+    $('#msg').textContent='กรุณาตั้งค่า API_URL ของ Google Apps Script ในไฟล์ก่อนใช้งาน';
+    $('#rows').innerHTML='<tr><td colspan="5" class="empty">ยังไม่ได้เชื่อมต่อ Google Sheets</td></tr>';
+    return;
+  }
+  const res=await fetch(API_URL);
+  const json=await res.json();
+  if(!json.ok)throw new Error(json.error||'โหลดข้อมูลไม่สำเร็จ');
+  docs=Array.isArray(json.docs)?json.docs:[];
+  $('#msg').textContent='';
+  $('#add').disabled=false;
+  render();
+}
+
+function render(){
+  const q=norm($('#q').value),st=$('#st').value;
+  const years={};years[nowFy()]=0;
+  docs.forEach(d=>{years[d.fy]=(years[d.fy]||0)+1});
+  const ys=Object.keys(years).map(Number).sort((a,b)=>b-a);
+  if(fy!=='all'&&!ys.includes(+fy))fy='all';
+  $('#fy').innerHTML='<button data-y="all" class="'+(fy==='all'?'on':'')+'">ทุกปี <small>'+docs.length+'</small></button>'+
+    ys.map(y=>'<button data-y="'+y+'" class="'+(String(fy)===String(y)?'on':'')+'">ปีงบประมาณ '+y+' <small>'+years[y]+'</small></button>').join('');
+  const list=docs.filter(d=>(fy==='all'||String(d.fy)===String(fy))&&(st==='all'||d.status===st)&&
+    (!q||norm(d.docNo).includes(q)||norm(d.subject).includes(q)||norm(d.agency).includes(q)))
+    .sort((a,b)=>(b.docDate||'').localeCompare(a.docDate||'')||(b.createdAt||0)-(a.createdAt||0));
+  $('#cnt').textContent='พบ '+list.length+' รายการ'+(fy==='all'?'':' ในปีงบประมาณ '+fy);
+  $('#rows').innerHTML=list.length?list.map(d=>
+   '<tr><td><b>'+esc(d.docNo)+'</b><div class="m">ลงวันที่ '+fmt(d.docDate)+(fy==='all'?' · ปีงบฯ '+d.fy:'')+'</div></td>'+
+   '<td>'+esc(d.subject)+'<div class="m">'+esc(d.agency)+'</div></td>'+
+   '<td>'+((d.recvNo||d.recvDate)?'เลขรับ '+esc(d.recvNo||'-')+'<div class="m">รับเมื่อ '+fmt(d.recvDate)+'</div>':'<span class="m">-</span>')+'</td>'+
+   '<td><button class="bd '+(d.status==='filed'?'dn':'wk')+'" data-t="'+esc(d.id)+'" title="คลิกเพื่อเปลี่ยนสถานะ">'+LBL[d.status]+'</button></td>'+
+   '<td class="ac">'+(okUrl(d.fileUrl)?'<a href="'+esc(d.fileUrl)+'" target="_blank" rel="noopener">เปิด PDF</a>':'')+'<button class="lk" data-e="'+esc(d.id)+'">แก้ไข</button></td></tr>').join('')
+   :'<tr><td colspan="5" class="empty">'+(docs.length?'ไม่พบเอกสารที่ตรงกับเงื่อนไข':'ยังไม่มีเอกสาร กด “เพิ่มเอกสาร” เพื่อเริ่มต้น')+'</td></tr>';
+}
+
+function openForm(id){
+  editing=id?docs.find(d=>d.id===id):null;armed=false;
+  const f=$('#f');f.reset();$('#err').textContent='';
+  $('#del').hidden=!editing;$('#del').textContent='ลบเอกสาร';
+  $('#ttl').textContent=editing?'แก้ไขเอกสาร':'เพิ่มเอกสาร';
+  f.file.required=!editing;
+  $('#fl').textContent=editing&&editing.fileName
+    ?'ไฟล์ปัจจุบัน: '+editing.fileName+' (เลือกไฟล์ใหม่เพื่อแทนที่)'
+    :'เลือกไฟล์ PDF (เก็บในโฟลเดอร์ Google Drive)';
+  if(editing)for(const k of ['docNo','docDate','agency','subject','status','recvNo','recvDate'])f[k].value=editing[k]||'';
+  hint();$('#dlg').showModal();
+}
+function hint(){const d=$('#f').docDate.value;$('#fyh').textContent=d?'จะจัดเก็บในปีงบประมาณ '+fyOf(d):'ปีงบประมาณคำนวณจากวันที่ของหนังสือ (1 ต.ค. – 30 ก.ย.)'}
+
+async function save(e){
+  e.preventDefault();
+  const f=e.target,file=f.file.files[0],btn=$('#sv');
+  const rec={
+    id:editing?editing.id:('doc_'+Date.now()+'_'+Math.random().toString(36).slice(2,7)),
+    docNo:f.docNo.value.trim(),
+    docDate:f.docDate.value,
+    agency:f.agency.value.trim(),
+    subject:f.subject.value.trim(),
+    status:f.status.value,
+    recvNo:f.recvNo.value.trim(),
+    recvDate:f.recvDate.value,
+    createdAt:editing?(editing.createdAt||Date.now()):Date.now(),
+    fileId:editing?(editing.fileId||''):'',
+    fileUrl:editing?(editing.fileUrl||''):'',
+    fileName:editing?(editing.fileName||''):''
+  };
+  rec.fy=fyOf(rec.docDate);
+  btn.disabled=true;btn.textContent=file?'กำลังอัปโหลดไป Drive…':'กำลังบันทึก…';$('#err').textContent='';
+  try{
+    if(file){
+      if(!(file.type==='application/pdf'||/\.pdf$/i.test(file.name)))throw new Error('รองรับเฉพาะไฟล์ PDF');
+      if(file.size>10*1024*1024)throw new Error('ไฟล์ใหญ่เกิน 10 MB');
+      rec.fileName=file.name;
+      rec.pdfBase64=await toB64(file);
+    }
+    docs=await apiPost({action:'upsert',doc:rec});
+    $('#dlg').close();
+    render();
+  }catch(x){$('#err').textContent=(x&&x.message)||'บันทึกไม่สำเร็จ'}
+  finally{btn.disabled=false;btn.textContent='บันทึก'}
+}
+
+async function remove(){
+  if(!armed){armed=true;$('#del').textContent='กดอีกครั้งเพื่อยืนยัน (ไฟล์ใน Drive จะถูกย้ายไปถังขยะ)';return}
+  try{
+    docs=await apiPost({action:'delete',id:editing.id,fileId:editing.fileId||''});
+    $('#dlg').close();
+    render();
+  }catch(x){$('#err').textContent=(x&&x.message)||'ลบไม่สำเร็จ'}
+}
+
+$('#add').onclick=()=>openForm(null);
+$('#cx').onclick=()=>$('#dlg').close();
+$('#del').onclick=remove;
+$('#f').addEventListener('submit',save);
+$('#f').addEventListener('input',hint);
+$('#q').addEventListener('input',render);
+$('#st').addEventListener('change',render);
+$('#fy').addEventListener('click',e=>{const b=e.target.closest('[data-y]');if(b){fy=b.dataset.y;render()}});
+$('#rows').addEventListener('click',async e=>{
+  const t=e.target.closest('[data-t]'),ed=e.target.closest('[data-e]');
+  if(ed)openForm(ed.dataset.e);
+  if(t){
+    const d=docs.find(x=>x.id===t.dataset.t);if(!d)return;
+    const nextStatus=d.status==='filed'?'wip':'filed';
+    try{docs=await apiPost({action:'toggleStatus',id:d.id,status:nextStatus});render()}
+    catch(x){$('#msg').textContent=(x&&x.message)||'อัปเดตสถานะไม่สำเร็จ'}
+  }
+});
+
+(async()=>{
+  render();
+  try{await refreshDocs()}
+  catch(x){$('#msg').textContent=(x&&x.message)||'โหลดข้อมูลไม่สำเร็จ';$('#rows').innerHTML='<tr><td colspan="5" class="empty">โหลดข้อมูลไม่สำเร็จ</td></tr>'}
+})();
+</script>
+</body>
+</html>
